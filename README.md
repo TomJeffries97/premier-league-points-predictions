@@ -71,6 +71,7 @@ Moving forward:
 - Integrate cloud storage to the solution (save ELO files and league files to storage to reduce dependency on api)
 - Stream solution to some kind of database (BigQuery, Snowflake for example)
 - deploy into wider system
+- intregrate CI/CD, with GitHub actions or similar to run tests and deploy the library.
 
 ## Bugs/percularities in code
 - The default value for league and fallback doesn't quite carry through, meaning I have had to define the default twice

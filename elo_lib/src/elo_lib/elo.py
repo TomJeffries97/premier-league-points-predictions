@@ -12,7 +12,8 @@ def call_elo_api(url:str):
     :param url: url to query
     :return:
     """
-    response = requests.get(url)
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()  # Raises HTTPError for bad responses (4xx or 5xx)
     assert response.status_code == 200, "unsuccessful API call"
     ratings = [line.split(",") for line in response.text.split("\n")]
     rating_columns = ratings.pop(0)
@@ -31,6 +32,7 @@ def get_elo_rating(date: str = None, fallback: str = "./data/fallback_elo_data.c
         date = datetime.now().strftime("%Y-%m-%d")
 
     for attempt in range(API_CALL_ATTEMPTS):
+        # Ive since refactored the code and broken the api call out across two functions which I don't like
         try:
             url = f"{API_URL}/{date}"
             ratings = call_elo_api(url)
