@@ -7,10 +7,10 @@ with open(os.path.join(here, "requirements.txt"), "r") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="briefing_docs",
-    version="0.1.0",
+    name="elo_lib",
+    version="1.0.0",
     description="Library to call ELO api, generate fixture lists and predict final results from ELO ratings",
-    packages=find_packages(),
+    packages=find_packages(where='src'),
     author="Tom Jeffries",
     author_email="tom_jeffries@outlook.com",
     install_requires=requirements,
