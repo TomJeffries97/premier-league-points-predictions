@@ -14,11 +14,11 @@ class Leagues(Enum):
 
 
 class Country(Enum):
-    ENG = 'ENG'
-    FRA = 'FRA'
-    ESP = 'ESP'
-    GER = 'GER'
-    ITA = 'ITA'
+    ENG = "ENG"
+    FRA = "FRA"
+    ESP = "ESP"
+    GER = "GER"
+    ITA = "ITA"
 
 
 LEAGUE_COUNTRY_MAP = {
@@ -29,13 +29,13 @@ LEAGUE_COUNTRY_MAP = {
     Leagues.LIGUE_1: Country.FRA
 }
 
-def get_clubs(league: str = 'data/input/premier_league.csv', league_is_path_flag: bool = True):
+def get_clubs(league: str = "data/input/premier_league.csv"):
     """
     Get the clubs provided my input CSV of the single column schema {Club: string} or by calling a league by name
 
     :return: Dataframe of clubs
     """
-    if '.csv' in league:
+    if ".csv" in league:
         clubs = pd.read_csv(league)
     else:
         league = league.lower()
@@ -43,10 +43,10 @@ def get_clubs(league: str = 'data/input/premier_league.csv', league_is_path_flag
         league = Leagues(league)
         country = LEAGUE_COUNTRY_MAP[league]
         elo = get_elo_rating()
-        clubs = elo[(elo['Level'] == 1) & (elo['Country'] == country.value)]
+        clubs = elo[(elo["Level"] == 1) & (elo["Country"] == country.value)]
         assert clubs.shape[0] > 0, "returning an empty dataframe"
 
-    clubs = clubs['Club']
+    clubs = clubs["Club"]
     return clubs.reset_index()
 
 
@@ -62,13 +62,13 @@ def generate_fixtures(clubs: pd.DataFrame):
         for j in range(i+1, len(clubs)):
             # append first fixture
             fixtures.append({
-                'home_team': clubs.iloc[i]['Club'],
-                'away_team': clubs.iloc[j]['Club'],
+                "home_team": clubs.iloc[i]["Club"],
+                "away_team": clubs.iloc[j]["Club"],
             })
             # append the reverse fixture
             fixtures.append({
-                'home_team': clubs.iloc[j]['Club'],
-                'away_team': clubs.iloc[i]['Club'],
+                "home_team": clubs.iloc[j]["Club"],
+                "away_team": clubs.iloc[i]["Club"],
             })
     assert len(fixtures) == (len(clubs) - 1) * len(clubs), "Fixtures count mismatch: Expected twice the number of matches"
     return pd.DataFrame(fixtures)

@@ -10,7 +10,7 @@ def main():
     date = '2025-08-12'
     # Set league
     league = None
-    league = 'la liga'
+    league = 'premier league'
     # set fallback path
     fallback = None
 

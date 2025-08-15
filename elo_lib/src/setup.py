@@ -10,7 +10,7 @@ setup(
     name="elo_lib",
     version="1.0.0",
     description="Library to call ELO api, generate fixture lists and predict final results from ELO ratings",
-    packages=find_packages(where='src'),
+    packages=find_packages(where="src"),
     author="Tom Jeffries",
     author_email="tom_jeffries@outlook.com",
     install_requires=requirements,
