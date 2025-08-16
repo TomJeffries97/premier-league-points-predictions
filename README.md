@@ -66,6 +66,7 @@ began the process of mocking data but this has not been implemented
 - Clean up the library and its setup (move to pytoml for example). I went for the a slightly outdated setup of a library
 using setup.py and requirements.txt, however this is not the most modern way of doing things. This was done as I have 
 more experience with this and could move forward quicker in the 3 hour slot. 
+- Change logging from print statements to debug and info logs (and add much more)
 
 Moving forward:
 - Integrate cloud storage to the solution (save ELO files and league files to storage to reduce dependency on api)

@@ -12,7 +12,7 @@ def main():
     league = None
     league = 'premier league'
     # set fallback path
-    fallback = None
+    fallback = './data/fallback_elo_data.csv'
 
     # Predict points for each team based on ELO ratings and fixtures
     predictions = predict_points(date=date,league=league,fallback=fallback)

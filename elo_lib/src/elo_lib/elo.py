@@ -1,17 +1,19 @@
 import requests
 import pandas as pd
+from retry import retry
 from datetime import datetime
 
 API_URL = "http://api.clubelo.com"
-API_CALL_ATTEMPTS = 1
 
 
+@retry(tries=3, backoff=2)
 def call_elo_api(url:str):
     """run a get to the url and return a pd.Dataframe
 
     :param url: url to query
     :return:
     """
+
     response = requests.get(url, timeout=10)
     response.raise_for_status()  # Raises HTTPError for bad responses (4xx or 5xx)
     assert response.status_code == 200, "unsuccessful API call"
@@ -31,17 +33,14 @@ def get_elo_rating(date: str = None, fallback: str = "./data/fallback_elo_data.c
     if not date:
         date = datetime.now().strftime("%Y-%m-%d")
 
-    for attempt in range(API_CALL_ATTEMPTS):
-        # Ive since refactored the code and broken the api call out across two functions which I don't like
-        try:
-            url = f"{API_URL}/{date}"
-            ratings = call_elo_api(url)
+    # Ive since refactored the code and broken the api call out across two functions which I don't like
+    try:
+        url = f"{API_URL}/{date}"
+        ratings = call_elo_api(url)
 
-        except requests.RequestException as e:
-            print(f"Attempt {attempt + 1}: Failed to fetch ELO ratings from API. Error: {e}")
-            if attempt == API_CALL_ATTEMPTS - 1:
-                print("Using fallback data.")
-                ratings = pd.read_csv(fallback)
+    except:
+        print("Using fallback data.")
+        ratings = pd.read_csv(fallback)
 
     assert ["Rank", "Club", "Country", "Level", "Elo", "From", "To"] == list(ratings.columns)
 
